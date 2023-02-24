@@ -1,108 +1,93 @@
 class Track {
-    constructor(track, features) {
-      if (!track) {
-        alert('Track parameter is undefined');
-      }
+    constructor(track, features, similarityScore = null) {
       this.name = track.name;
       this.id = track.id;
+
       this.acousticness = features.acousticness;
       this.danceability = features.danceability;
       this.energy = features.energy;
       this.instrumentalness = features.instrumentalness;
-      this.loudness = features.loudness;
-      this.tempo = features.tempo;
+      this.loudness = (features.loudness + 60) / 60; // normalize loudness to be between 0 and 1 (like the other features)
       this.valence = features.valence;
+
+      this.similarityScore = similarityScore;
     }    
 }
 
-
 async function recommendTracks() {
+    //returns array of objects for user's top tracks
+    let userTopTracks = await getUserTopTracks(); 
+    console.log(userTopTracks.length);
     
-    let userTopTracks = await getUserTopTracks(); //returns array of tracks (no repeats)
-    console.log(userTopTracks);
-    
-    // gets a single average feature vector for all of user's top tracks
-    let userTopFeaturesVector = await getUsersTopTracksAverageFeatureVector(userTopTracks); 
-    //console.log(userTopFeaturesVector);
+    //returns average feature vector (TRACK OBJECT) for user's top tracks
+    let userTopAverageFeaturesVector = await getUsersTopTracksAverageFeatureVector(userTopTracks); 
+    console.log(userTopAverageFeaturesVector);
 
-    getSimilarTracksFeatureVectors();
+    // gets an array of TRACK OBJECTS of similar tracks to user's top tracks
+    let recommendedTracks = await getSimilarTracksFeatureVectors(userTopTracks);
 
-    calculateSimilarityScore();
+    // calculates similarity score for each track in similar tracks array and returns array of track objects with similarity score
+    recommendedTracks = await calculateSimilarityScore(userTopAverageFeaturesVector, recommendedTracks);
+    console.table(recommendedTracks);
+    //sort the array of track objects by similarity score
+    //display the top ones
    
 }
 
-async function getUserTopTracks() { 
-  let allTracks = [];
-  let completedRequests = 0;
+// gets user's top tracks from all time, last 6 months, and last 4 weeks
+async function getUserTopTracks() {
+    let allTracks = [];
 
-  return new Promise((resolve) => {
-    getTopItems("tracks", 50, "long_term", addToArray);
-    getTopItems("tracks", 50, "medium_term", addToArray); 
-    getTopItems("tracks", 10, "short_term", addToArray);
+    let longTermTracks = await getTopItems("tracks", 40, "long_term"); 
+    let mediumTermTracks = await getTopItems("tracks", 40, "medium_term");
+    let shortTermTracks = await getTopItems("tracks", 10, "short_term");
 
-    function addToArray(topTracks) {
-      topTracks.forEach((topTrack) => {
-        if (!allTracks.find((track) => track.id === topTrack.id)) {
-          allTracks.push(topTrack);
+    // Combine the tracks from the three API calls into a single array with no duplicates
+    [longTermTracks, mediumTermTracks, shortTermTracks].forEach(tracks => {
+      tracks.items.forEach(track => {
+        if (!allTracks.find(t => t.id === track.id)) {
+          allTracks.push(track);
         }
       });
+    });
 
-      console.log(`Number of tracks added: ${allTracks.length}`);
-      completedRequests++;
-      if (completedRequests == 3) {
-        resolve(allTracks);
-      }
-    }
-  });
+    return allTracks; 
 }
 
+// gets average feature vector for all of user's top tracks 
 async function getUsersTopTracksAverageFeatureVector(userTopTracks) { 
-    const listOfTrackFeatures = ['acousticness', 'danceability', 'energy', 'instrumentalness', 'loudness', 'tempo', 'valence'];
-    console.log(userTopTracks.length);
-    console.log(userTopTracks);
+    const listOfTrackFeatures = ['acousticness', 'danceability', 'energy', 'instrumentalness', 'loudness', 'valence'];
     
-    let topTrackFeatureVectors = await getTrackFeatureVector(userTopTracks); // returns feature vector for each track in userTopTracks as an array of objects
-    //console.log(topTrackFeatureVectors);
-
-    let topTracksAverageFeatureVector = new Track({name: 'userTopTracks', id: 'userTopTracks'}, {}); //creates new Track object to store average feature values for all user's top tracks
-
-    listOfTrackFeatures.forEach(feature => { //loops through each feature. calculates avg feature value for each feature and sets it as property for topTracksAverageFeatureVector
-        let featureVectors = [];
-        
-        topTrackFeatureVectors.forEach(track => { 
-            console.log(track.name);
-            featureVectors.push(track[feature]); //pushes current feature value for each track into featureVectors array      
-        });
-
-        let averageFeatureValue = calculateAverageFeature(featureVectors); //calculates average feature value for this specific feature
-        
-        topTracksAverageFeatureVector[feature] = averageFeatureValue; //sets feature property for topTracksAverageFeatureValue to average feature value
-        
-    }); 
-
+    let topTrackFeatureVectors = await getTrackFeatureVector(userTopTracks); 
+    let topTracksAverageFeatureVector = new Track({name: 'userTopTracks', id: 'userTopTracks'}, {}); 
+    
+    for (let feature of listOfTrackFeatures) { //for each feature, get all feature values for each track and calculate average
+      let featureVectors = [];
+      for (let track of topTrackFeatureVectors) { 
+        featureVectors.push(track[feature]);   
+      };
+      let averageFeatureValue = await calculateAverageFeature(featureVectors); 
+      topTracksAverageFeatureVector[feature] = averageFeatureValue; 
+    };
     return topTracksAverageFeatureVector;
-
 }
 
-function calculateAverageFeature(totalVectors) { //calculate average feature value by removing outliers and taking average of remaining values
-    totalVectors = sortArrayAscending(totalVectors);
-
-    //find outliers and remove them
+//calculates average feature value from array of feature vectors
+async function calculateAverageFeature(totalVectors) { 
+    totalVectors = mergeSort(totalVectors);
     totalVectors = removeOutliers(totalVectors);
-
-    //calculate average
     let sum = 0;
     totalVectors.forEach(vector => {
         sum += vector;
-    });
-    let average = sum / totalVectors.length;
+    });    
+    let average = sum / totalVectors.length;    
     return average;
 }
 
-function removeOutliers(array) { //removes outliers using interquartile range
-    let n = array.length;
-    let q1 = array[Math.floor(n / 4)];
-    let q3 = array[Math.floor(3 * n / 4)];
+//removes outliers from array 
+function removeOutliers(array) { 
+    let q1 = array[Math.floor(array.length / 4)];
+    let q3 = array[Math.floor(3 * array.length / 4)];
     let iqr = q3 - q1;
     
     let lowerBound = q1 - (1.5 * iqr);
@@ -110,39 +95,82 @@ function removeOutliers(array) { //removes outliers using interquartile range
 
     for (let i = 0; i < array.length; i++) {
         if (array[i] < lowerBound || array[i] > upperBound) {
-            console.log(array[i]);
             array.splice(i, 1); //remove outlier and shifts all elements after it to the left
             i--; //decrements i to account for the shift           
         }
     }
-
     return array;
 }
 
+
+//takes in array of track objects and returns array of Track objects with audio features 
 async function getTrackFeatureVector(tracks) {
-  let featureVectors = [];
-  console.log(tracks); 
-
-  tracks.forEach((track) => {
-    getTrackAudioFeatures(track.id, convertToObject)
-    
-    function convertToObject(features) {
-      const trackObject = new Track(track, features);
-      featureVectors.push(trackObject);
-    }
-
+  const tracksAudioFeatures = await getTracksAudioFeatures(tracks); 
+  // Creates a Track object for each track
+  const tracksFeatureVectors = tracksAudioFeatures.map((feature, index) => {
+    const track = tracks[index];
+    return new Track(track, feature);
   });
-
-  return featureVectors;
+  return tracksFeatureVectors; 
 }
 
 
-
-function getSimilarTracksFeatureVectors() {
-    
+/*takes in array of track objects
+returns array of track objects with similar tracks to each track in array*/
+async function getSimilarTracksFeatureVectors(userTopTracksArray) {
+    const totalSimilarTracks = [];
+    for (let topTrack of userTopTracksArray) {
+        let similarTracks = await getTrackRecommendations(topTrack);
+        for (let track of similarTracks) {
+          if (!totalSimilarTracks.find(t => t.id === track.id) && !userTopTracksArray.find(t => t.id === track.id)) {  
+            totalSimilarTracks.push(track);
+          }
+        }
+    }
+    const similarTracksFeatureVectors = await getTrackFeatureVector(totalSimilarTracks); 
+    return similarTracksFeatureVectors;   
 }
 
-function calculateSimilarityScore() {
-    
+//calculates cosine similarity score for each track in array and returns array of track objects with similarity scores
+function calculateSimilarityScore(userAverageFeatures, tracks) {
+    const userMagnitude = calculateMagnitude(userAverageFeatures);
+    for (let track of tracks) {
+        const trackMagnitude = calculateMagnitude(track);
+        const dotProduct = calculateDotProduct(userAverageFeatures, track);
+        const similarityScore = calculateCosineSimilarity(dotProduct, userMagnitude, trackMagnitude);
+        track.similarityScore = similarityScore;
+    }
+    return tracks;
+}
+
+// returns dot products of the features in two track objects
+function calculateDotProduct(userAverageFeatures, track) {
+    let dotProduct = 0;
+    for (feature in track) {
+        if (feature === 'name' || feature === 'id' || feature === 'similarityScore') {
+            continue; 
+        }
+        dotProduct += userAverageFeatures[feature] * track[feature];
+    }
+    return dotProduct;
+}
+
+//takes in track object and returns magnitude of feature vector
+function calculateMagnitude(track) {
+    let magnitude = 0;
+    for (feature in track) {
+        if (feature === 'name' || feature === 'id' || feature === 'similarityScore') {
+            continue; 
+        }
+        magnitude += Math.pow(track[feature], 2);
+    }
+    magnitude = Math.sqrt(magnitude);
+    return magnitude;
+}
+
+//calculates cosine similarity score and returns value between 0 and 1
+function calculateCosineSimilarity(dotProduct, userMagnitude, trackMagnitude) {
+  const similarityScore = (dotProduct) / (userMagnitude * trackMagnitude);
+  return similarityScore.toFixed(2); //round to 2 decimal places
 }
         

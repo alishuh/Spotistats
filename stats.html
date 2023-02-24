@@ -58,7 +58,7 @@
 
     <script src="/functions.js"></script>
     <script>
-        function validate() {
+        async function validate() {
             event.preventDefault();
             let inputType = document.querySelector('input[name="type"]:checked');
             let inputTime = document.querySelector('input[name="time"]:checked');
@@ -74,13 +74,16 @@
             }
             else {
                 inputError.innerHTML = '';
-                let items = getTopItems(inputType.id, inputValue, inputTime.id, displayTopItems);
+                let data = await getTopItems(inputType.id, inputValue, inputTime.id);
+                displayTopItems(data, inputType.id);
             }
         }
 
-        function displayTopItems(items, data, type, limit, time_range) {
+        function displayTopItems(data, type) {
             let itemsList = document.getElementById('topItemsTable');
             itemsList.innerHTML = '';
+
+            let items = data.items;
 
             if (type == 'tracks') {
                 itemsList.innerHTML += `<tr> <th>Songs</th> <th>Artists</th></tr>`;
@@ -89,7 +92,7 @@
                     itemsList.innerHTML += `<tr><td class="item">${item.name}</td> <td class="description">${item.artists[0].name}</td></tr>`;
                 }
             }
-            else {
+            else if (type == 'artists') {
                 itemsList.innerHTML += `<tr> <th>Artists</th></tr>`;
                 for (let i = 0; i < items.length; i++) {
                     let item = items[i];
