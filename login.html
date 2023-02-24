@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <title>Spotify Login</title>
+</head>
+
+<body>
+    <header>
+        <h1>Spotistats</h1>
+    </header>
+
+    <div id="login">
+        <h3 id="login-message">Log in with spotify to continue...</h3>
+
+        <button id="login-button" onclick="login()">Login with Spotify</button>
+    </div>
+
+
+    <div id="userLoggedInMessage"></div>
+
+    <script src="/functions.js"></script>
+    <script>
+
+        // allows user to log into spotify api and retrieves profile info
+        let clientId = '47d30d8981be40c9a1b7f5cf4895b0d2';
+        let redirectUri = 'http://localhost:8008/callback/';
+        let scope = 'ugc-image-upload user-read-playback-state user-modify-playback-state user-read-currently-playing app-remote-control streaming playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-follow-modify user-follow-read user-read-playback-position user-top-read user-read-recently-played user-library-modify user-library-read user-read-email user-read-private';
+
+        function login() {
+            let url = 'https://accounts.spotify.com/authorize?client_id=' + clientId + '&response_type=token&redirect_uri=' + redirectUri + '&scope=' + scope;
+            window.location.href = url;
+        }
+
+        function getUserInfo() {
+            let accessToken = getAccessToken();
+
+            if (!accessToken) {
+
+                let userInfoDiv = document.getElementById('userLoggedInMessage');
+                userInfoDiv.innerHTML = '<p>error</p>';
+                return;
+
+            }
+
+            localStorage.setItem("accessToken", accessToken); //stores access token in local storage to access in other web pages
+
+            let userInfoUrl = 'https://api.spotify.com/v1/me'; //the URL for the Spotify API endpoint to retrieve the user's information
+
+            fetch(userInfoUrl, {
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken //makes a GET request to the userInfoUrl endpoint, passing an object containing a header with the access token as an authorization bearer token.
+                }
+            })
+                .then(response => response.json())
+            homePage();
+
+        }
+
+        function getAccessToken() {
+            let accessToken = window.location.hash.substring(1).split('&')[0].split('=')[1];
+            return accessToken;
+        }
+
+        window.onload = function () { //function called when web page finished loading
+            if (window.location.hash) { //if URL contains a hash...  (so the user has an access token after being redirected back from the Spotify auth page)
+
+                //gets rid of the login stuff
+                let loginDiv = document.getElementById('login');
+                loginDiv.parentNode.removeChild(loginDiv);
+
+                //allows data to be retrieved with access token
+                getUserInfo();
+            }
+        }
+
+        function homePage() {
+            window.location = "/home.html";
+        }
+
+
+    </script>
+</body>
+</html>

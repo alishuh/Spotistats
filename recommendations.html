@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spotify Statistics</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Spotistats</h1>
+    </header>
+
+    <nav>
+      <a href="/home.html">Home</a>
+      <a href="/stats.html">Statistics Viewer</a>
+      <a class="selectedPage" href="/recommendations.html">Recommendations</a>
+      <a href="/quiz.html">Quiz</a>
+      <a href="#" class="right">Log Out</a>
+      <div id="userLoggedInMessage"></div>
+    </nav>
+
+    <div id="trackRecommendations"></div>
+
+    <script src="/functions.js"></script>
+    <script src="/recommendations.js"></script>
+    <script>
+      window.onload = function() {
+        recommendTracks();
+      }
+    </script>
+  </body>
+</html>

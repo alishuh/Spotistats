@@ -1,0 +1,149 @@
+/*dark red colour:: #952918
+darker light grey colour: #b7b0b0
+dark grey navbar colour: #333*/
+
+
+header {
+    padding: 5px;
+    text-align: center;
+    background: #952918;
+    color: white;
+    font-size: 30px;
+}
+
+body {
+    background-color: lightgrey;
+    text-align: center;
+}
+
+nav {
+    overflow: hidden; /* Hide overflow */
+    background-color: #333; /* Dark background color */
+}
+
+    /* Style the navigation bar links */
+    nav a {
+        float: left; /* Make sure that the links stay side-by-side */
+        display: block; /* Change the display to block, for responsive reasons (see below) */
+        color: white; /* White text color */
+        text-align: center; /* Center the text */
+        padding: 14px 20px; /* Add some padding */
+        text-decoration: none; /* Remove underline */
+    }
+
+        /* Right-aligned link */
+        nav a.right {
+            float: right; /* Float a link to the right */
+        }
+
+        /* Change color on hover/mouse-over */
+        nav a:hover {
+            background-color: #ddd; /* Grey background color */
+            color: black; /* Black text color */
+        }
+
+        /*shows what page the user currently viewing*/
+        nav .selectedPage {
+            background-color: lightgrey; /* Grey background color */
+            color: black; /* Black text color */
+        }
+    
+            /*styles other navbar text*/
+            nav div {
+                float: left; /* Make sure that the links stay side-by-side */
+                display: block; /* Change the display to block, for responsive reasons (see below) */
+                color: white; /* White text color */
+                text-align: center; /* Center the text */
+                padding: 14px 20px; /* Add some padding */
+                text-decoration: none; /* Remove underline */
+                float: right;
+            }
+
+h2 {
+    color: black;
+    font-size: 25px;
+    font-weight: 700;
+}
+h3 {
+    color: black;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.darkRedText {
+    color: #952918;
+    font-size: 20px;
+}
+
+.errorText {
+    color: #c21a00;
+    font-size: 12px;
+    font-weight:700;
+}
+
+        /*input*/
+        .btn {
+            border: none;
+            background-color: white;
+            color: black;
+            padding: 14px 28px;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            color: #952918;
+        }
+
+            .btn:hover {
+                background-color: #952918;
+                color: white;
+            }
+
+            .btn input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+
+        .input {
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            color: #952918;
+        }
+
+
+        .statsViewingOptions {
+            text-align: center;
+            padding: 2px 10px;
+            display: inline-block;
+            background-color: #b7b0b0;
+            border: inset;
+        }
+
+
+.itemsTable {
+    background-color: whitesmoke;
+    display: inline-table;
+    
+}
+    .itemsTable td {
+        font-size: 20px;
+        padding: 10px 10px;
+    }
+    .itemsTable th {
+        font-size: 30px;
+        background-color: #952918;
+        color: white;
+        padding: 10px 15px;
+    }
+    .itemsTable .item {
+        font-weight: bold;
+        color: black;
+    }
+    .itemsTable .description {
+        color: darkred;
+    }
+
+    
