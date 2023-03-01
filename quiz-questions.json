@@ -1,0 +1,122 @@
+[
+    {
+        "question": "What was your most played song this month?",
+        "options": [
+            "{{topSongs.pastMonth[0]}}",
+            "{{topSongs.pastMonth[1]}}",
+            "{{topSongs.pastMonth[2]}}",
+            "{{topSongs.pastMonth[3]}}"
+        ],
+        "answer": "{{topSongs.pastMonth[0]}}"
+    },
+    {
+        "question": "What was your most played song this year?",
+        "options": [
+            "{{topSongs.pastYear[0]}}",
+            "{{topSongs.pastYear[1]}}",
+            "{{topSongs.pastYear[2]}}",
+            "{{topSongs.pastYear[3]}}"
+        ],
+        "answer": "{{topSongs.pastYear[0]}}"
+    },
+    {
+        "question": "What was your most played song of all time?",
+        "options": [
+            "{{topSongs.allTime[0]}}",
+            "{{topSongs.allTime[1]}}",
+            "{{topSongs.allTime[2]}}",
+            "{{topSongs.allTime[3]}}"
+        ],
+        "answer": "{{topSongs.allTime[0]}}"
+    },
+    {
+        "question": "Who is your top artist of all time?",
+        "options": [
+            "{{topArtists.allTime[0]}}",
+            "{{topArtists.allTime[1]}}",
+            "{{topArtists.allTime[2]}}",
+            "{{topArtists.allTime[3]}}"
+        ],
+        "answer": "{{topArtists.allTime[0]}}"
+    },
+    {
+        "question": "Who is your top artist this year?",
+        "options": [
+            "{{topArtists.pastYear[0]}}",
+            "{{topArtists.pastYear[1]}}",
+            "{{topArtists.pastYear[2]}}",
+            "{{topArtists.pastYear[3]}}"
+        ],
+        "answer": "{{topArtists.pastYear[0]}}"
+    },
+    {
+        "question": "Who is your top artist this month?",
+        "options": [
+            "{{topArtists.pastMonth[0]}}",
+            "{{topArtists.pastMonth[1]}}",
+            "{{topArtists.pastMonth[2]}}",
+            "{{topArtists.pastMonth[3]}}"
+        ],
+        "answer": "{{topArtists.pastMonth[0]}}"
+    },
+    {
+        "question": "Which of these artists have you listened to the most this year?",
+        "options": [
+            "{{topArtists.pastYear[5]}}",
+            "{{topArtists.pastYear[6]}}",
+            "{{topArtists.pastYear[7]}}",
+            "{{topArtists.pastYear[8]}}"
+        ],
+        "answer": "{{topArtists.pastYear[5]}}"
+    },
+    {
+        "question": "Which of these artists have you listened to the most this month?",
+        "options": [
+            "{{topArtists.pastMonth[5]}}",
+            "{{topArtists.pastMonth[6]}}",
+            "{{topArtists.pastMonth[7]}}",
+            "{{topArtists.pastMonth[8]}}"
+        ],
+        "answer": "{{topArtists.pastMonth[5]}}"
+    },
+    {
+        "question": "Which of these artists have you listened to the most in total?",
+        "options": [
+            "{{topArtists.allTime[5]}}",
+            "{{topArtists.allTime[6]}}",
+            "{{topArtists.allTime[7]}}",
+            "{{topArtists.allTime[8]}}"
+        ],
+        "answer": "{{topArtists.allTime[5]}}"
+    },
+    {
+        "question": "Which of these songs have you listened to the most this year?",
+        "options": [
+            "{{topSongs.pastYear[5]}}",
+            "{{topSongs.pastYear[6]}}",
+            "{{topSongs.pastYear[7]}}",
+            "{{topSongs.pastYear[8]}}"
+        ],
+        "answer": "{{topSongs.pastYear[5]}}"
+    },
+    {
+        "question": "Which of these songs have you listened to the most this month?",
+        "options": [
+            "{{topSongs.pastMonth[5]}}",
+            "{{topSongs.pastMonth[6]}}",
+            "{{topSongs.pastMonth[7]}}",
+            "{{topSongs.pastMonth[8]}}"
+        ],
+        "answer": "{{topSongs.pastMonth[5]}}"
+    },
+    {
+        "question": "Which of these songs have you listened to the most in total?",
+        "options": [
+            "{{topSongs.allTime[5]}}",
+            "{{topSongs.allTime[6]}}",
+            "{{topSongs.allTime[7]}}",
+            "{{topSongs.allTime[8]}}"
+        ],
+        "answer": "{{topSongs.allTime[5]}}"
+    }
+]

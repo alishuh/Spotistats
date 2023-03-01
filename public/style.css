@@ -1,149 +1,237 @@
-/*dark red colour:: #952918
-darker light grey colour: #b7b0b0
-dark grey navbar colour: #333*/
+/* colour codes with colour names
+#cfbabc - white grey
+#eee0e0 - light grey
+#1C1D25 - dark grey
+#171821 - black grey
+#ff2465 - pink
 
+
+/* =========== ALL PAGES =========== */
 
 header {
-    padding: 5px;
-    text-align: center;
-    background: #952918;
-    color: white;
-    font-size: 30px;
+    background-color: #171821;
+    color: #cfbabc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+h1 {
+    padding: 10px;
+    font-size: 70px;
+    margin: 0;
+}
+
+/* === NAVBAR === */
+nav {   
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+    
+    nav a, nav button {
+        background-color: inherit;
+        border: none;
+        padding: 20px;
+        color: #cfbabc;
+        text-decoration: none;
+        font-size: 20px;
+    }
+    
+        nav a:hover, nav button:hover { /* Change color on hover/mouse-over */
+            color: #FF2465;
+            background-color: inherit;
+        }
+
+        nav .selectedPage { /*shows what page the user currently viewing*/
+            color: #FF2465;
+            background-color: inherit;
+        }
+    
+    nav img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-left: 10px;
+    }
+
+
+
+/* === BASE STYLES === */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
 }
 
 body {
-    background-color: lightgrey;
+    background-color: #cfbabc;
     text-align: center;
+    color: #171821;
+    font-family: sans-serif;
+    font-size: 16px;
 }
 
-nav {
-    overflow: hidden; /* Hide overflow */
-    background-color: #333; /* Dark background color */
+main {
+    padding: 10px;
 }
 
-    /* Style the navigation bar links */
-    nav a {
-        float: left; /* Make sure that the links stay side-by-side */
-        display: block; /* Change the display to block, for responsive reasons (see below) */
-        color: white; /* White text color */
-        text-align: center; /* Center the text */
-        padding: 14px 20px; /* Add some padding */
-        text-decoration: none; /* Remove underline */
-    }
-
-        /* Right-aligned link */
-        nav a.right {
-            float: right; /* Float a link to the right */
-        }
-
-        /* Change color on hover/mouse-over */
-        nav a:hover {
-            background-color: #ddd; /* Grey background color */
-            color: black; /* Black text color */
-        }
-
-        /*shows what page the user currently viewing*/
-        nav .selectedPage {
-            background-color: lightgrey; /* Grey background color */
-            color: black; /* Black text color */
-        }
-    
-            /*styles other navbar text*/
-            nav div {
-                float: left; /* Make sure that the links stay side-by-side */
-                display: block; /* Change the display to block, for responsive reasons (see below) */
-                color: white; /* White text color */
-                text-align: center; /* Center the text */
-                padding: 14px 20px; /* Add some padding */
-                text-decoration: none; /* Remove underline */
-                float: right;
-            }
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
 
 h2 {
-    color: black;
-    font-size: 25px;
-    font-weight: 700;
-}
-h3 {
-    color: black;
-    font-size: 20px;
-    font-weight: 700;
+    color: #171821;
+    font-size: 28px;
+    font-weight: 900;
 }
 
-.darkRedText {
-    color: #952918;
+h3 {
+    color: #1c1d25;
+    font-size: 22px;
+}
+
+h4 {
+    color: #FF2465;
     font-size: 20px;
 }
+
+img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain; 
+}
+
+/* === TABLE === */
+table {
+    background-color: #eee0e0;
+    display: inline-table;
+}
+
+td, th {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    font-size: 20px;
+    background-color: #1C1D25;
+    color: #ff2465;
+}
+
+button {
+    background-color: #1c1d25;
+    color: #cfbabc;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px 10px;
+    border-radius: 5px;
+}
+
+    button:hover {
+        color: #ff2465;
+    }
+
+
+/* === CUSTOM STYLES === */
 
 .errorText {
     color: #c21a00;
     font-size: 12px;
-    font-weight:700;
+    font-weight: 700;
 }
 
-        /*input*/
-        .btn {
-            border: none;
-            background-color: white;
-            color: black;
-            padding: 14px 28px;
-            font-size: 16px;
-            text-align: center;
-            cursor: pointer;
-            color: #952918;
-        }
-
-            .btn:hover {
-                background-color: #952918;
-                color: white;
-            }
-
-            .btn input {
-                position: absolute;
-                opacity: 0;
-                cursor: pointer;
-                height: 0;
-                width: 0;
-            }
-
-        .input {
-            font-size: 16px;
-            text-align: center;
-            cursor: pointer;
-            color: #952918;
-        }
+.infoBox {
+    padding: 30px 30px;
+    display: inline-block;
+    border: 5px solid #ff2465;
+    border-radius: 10px;
 
 
-        .statsViewingOptions {
-            text-align: center;
-            padding: 2px 10px;
-            display: inline-block;
-            background-color: #b7b0b0;
-            border: inset;
-        }
-
-
-.itemsTable {
-    background-color: whitesmoke;
-    display: inline-table;
-    
+    color: #1c1d25;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;   
 }
-    .itemsTable td {
-        font-size: 20px;
-        padding: 10px 10px;
-    }
-    .itemsTable th {
-        font-size: 30px;
-        background-color: #952918;
-        color: white;
-        padding: 10px 15px;
-    }
-    .itemsTable .item {
-        font-weight: bold;
-        color: black;
-    }
-    .itemsTable .description {
-        color: darkred;
+
+
+
+/* === INPUTS === */
+.input {
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    color: #1c1d25;
+}
+
+
+
+
+
+
+
+
+
+/* =========== STATS PAGE =========== */
+
+/* === VIEWING OPTIONS === */
+.statsViewingOptions {
+    text-align: center;
+    padding: 2px 10px;
+    display: inline-block;
+    border: 5px solid #ff2465;
+    border-radius: 5px;
+}
+
+/* === STATS TABLE === */
+.item {
+    font-weight: bold;
+}
+
+.description {
+    color: #332e33;
+}
+
+
+
+
+
+/* =========== RECOMMENDATIONS PAGE =========== */
+
+/* === RECOMMENDED TRACKS === */
+.recommendations {
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .recommendations div {
+        display: inline-block;
+        width: 15%;
+
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        flex: 1 1 20%; 
+
+        padding: 5px 5px;
+        border: 5px solid #ff2465;
+        border-radius: 10px;
+        margin: 5px 5px;
+
+        color: #FF2465;
+
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis; 
     }
 
-    
+    .recommendations div img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+    }

@@ -7,53 +7,56 @@
 <body>
     <header>
         <h1>Spotistats</h1>
+
+        <nav>
+            <a href="/home.html">Home</a>
+            <a class="selectedPage" href="/stats.html">Statistics Viewer</a>
+            <a href="/recommendations.html">Recommendations</a>
+            <a href="/quiz.html">Quiz</a>
+            <button id="logOutButton" onclick="logOut()">Log Out</button>
+            <img id="currentUser" src="">   
+        </nav>
+
     </header>
 
-    <nav>
-        <a href="/home.html">Home</a>
-        <a class="selectedPage" href="/stats.html">Statistics Viewer</a>
-        <a href="/recommendations.html">Recommendations</a>
-        <a href="/quiz.html">Quiz</a>
-        <a href="#" class="right">Log Out</a>
-        <div id="userLoggedInMessage"></div> <!--shows 'logged in as [user's name]' next to logout button]-->
-    </nav>
-
-    <h1>View your Listening Statistics!</h1>
-
-    <section class="statsViewingOptions">
-
-        <h3>Choose The Options</h3><br />
-
-        <form name="statsOptionsForm" onsubmit="validate();">
-            <label class="darkRedText" id="type">
-                <b>Statistics for Artists or Songs?</b> <br />
-                <label class="input"> <input type="radio" name="type" id="artists" /> Artists </label>
-                <label class="input"> <input type="radio" name="type" id="tracks" /> Songs </label>
-            </label><br /><br />
-
-            <label class="darkRedText" id="amount">
-                <b>How Many Results?</b> <br />
-                <input value="10" type="text" id="numberOfItems" placeholder="1 - 50" class="input"> <br><br>
-            </label>
-
-            <label class="darkRedText" id="time">
-                <b> Period for Results?</b> <br />
-                <label class="input"> <input type="radio" name="time" id="long_term" /> Forever </label>
-                <label class="input"> <input type="radio" name="time" id="medium_term" /> Past 6 Months </label>
-                <label class="input"> <input type="radio" name="time" id="short_term" /> Past Month </label> <br />
-            </label> <br />
-
-            <button type="submit" class="btn">Show my stats</button>
-            <div id="inputError" class="errorText"></div> <br /><br />
-        </form>
-
-    </section> <br /><br />
-
-    <section>
+    <main>
         
-        <table id="topItemsTable" class="itemsTable"></table>
+        <h2>View your Listening Statistics!</h2>
+
+        <section class="statsViewingOptions">
+
+            <h3>Choose The Options</h3><br />
+
+            <form name="statsOptionsForm" onsubmit="validate();">
+                <label id="type">
+                    <b>Statistics for Artists or Songs?</b> <br />
+                    <label class="input"> <input type="radio" name="type" id="artists" /> Artists </label>
+                    <label class="input"> <input type="radio" name="type" id="tracks" /> Songs </label>
+                </label><br /><br />
+
+                <label id="amount">
+                    <b>How Many Results?</b> <br />
+                    <input value="10" type="text" id="numberOfItems" placeholder="1 - 50" class="input"> <br><br>
+                </label>
+
+                <label id="time">
+                    <b> Period for Results?</b> <br />
+                    <label class="input"> <input type="radio" name="time" id="long_term" /> Forever </label>
+                    <label class="input"> <input type="radio" name="time" id="medium_term" /> Past 6 Months </label>
+                    <label class="input"> <input type="radio" name="time" id="short_term" /> Past Month </label> <br />
+                </label> <br />
+
+                <button type="submit" class="btn">Show my stats</button>
+                <div id="inputError" class="errorText"></div> <br /><br />
+            </form>
+
+        </section> <br /><br />
+
+        
+            
+            <table id="topItemsTable"></table>
     
-    </section>
+    </main>
 
 
     <script src="/functions.js"></script>

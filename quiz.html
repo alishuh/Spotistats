@@ -7,18 +7,40 @@
 <body>
     <header>
         <h1>Spotistats</h1>
+
+        <nav>
+            <a href="/home.html">Home</a>
+            <a href="/stats.html">Statistics Viewer</a>
+            <a href="/recommendations.html">Recommendations</a>
+            <a class="selectedPage" href="/quiz.html">Quiz</a>
+            <button id="logOutButton" onclick="logOut()">Log Out</button>
+            <img id="currentUser" src="">   
+        </nav>
+
     </header>
 
-    <nav>
-        <a href="/home.html">Home</a>
-        <a href="/stats.html">Statistics Viewer</a>
-        <a href="/recommendations.html">Recommendations</a>
-        <a class="selectedPage" href="/quiz.html">Quiz</a>
-        <a href="#" class="right">Log Out</a>
-        <div id="userLoggedInMessage"></div>
-    </nav>
+    <main>
+        <h2>Quiz</h2>
 
-    <div id="userLoggedInMessage"></div>
+        <section id="quizInfo" class="infoBox">
+            <p>Take a quiz to see how well you know your music.</p>
+            <p>Click the button below to start</p>
+            <button id="quizButton" onclick="startQuiz()">Start Quiz</button>
+        </section>
+
+        <section id="quiz" style="display: none;">
+            <h3 id="question"></h3>
+            <section id="answers"></section>
+            <button id="nextButton" onclick="nextQuestion()">Next</button>
+        </section>
+
+        <section id="quizResults" style="display: none;">
+            <h3>Quiz Results</h3>
+            <p id="quizScore"></p>
+            <button id="restartButton" onclick="restartQuiz()">Restart Quiz</button>
+        </section>
+        
+    </main>
 
 
     <script src="/functions.js"></script>

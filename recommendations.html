@@ -6,26 +6,104 @@
   </head>
   <body>
     <header>
-      <h1>Spotistats</h1>
+        <h1>Spotistats</h1>
+
+        <nav>
+            <a href="/home.html">Home</a>
+            <a href="/stats.html">Statistics Viewer</a>
+            <a class="selectedPage" href="/recommendations.html">Recommendations</a>
+            <a href="/quiz.html">Quiz</a>
+            <button id="logOutButton" onclick="logOut()">Log Out</button>
+            <img id="currentUser" src="">   
+        </nav>
+
     </header>
 
-    <nav>
-      <a href="/home.html">Home</a>
-      <a href="/stats.html">Statistics Viewer</a>
-      <a class="selectedPage" href="/recommendations.html">Recommendations</a>
-      <a href="/quiz.html">Quiz</a>
-      <a href="#" class="right">Log Out</a>
-      <div id="userLoggedInMessage"></div>
-    </nav>
 
-    <div id="trackRecommendations"></div>
+    <main>
+        <h2>Recommendations</h2>
+
+        <section id="recommendationsInfo" class="infoBox">
+            <p>Get recommendations based on your listening habits.</p>
+            <p>Click the button below to start</p>
+            <button id="recommendButton" onclick="recommendTracks()">Get Recommendations</button>
+        </section>
+
+
+
+        <section class="recommendations" id="recommendations" style="display: none;">
+
+            <h3>100% Match</h3>
+            <section id="topRecommendations"></section>
+
+            <h3>Other Recommendations</h3>
+            <section id="otherRecommendations"></section>
+
+        </section>
+
+        
+
+    </main>
+
+
+
 
     <script src="/functions.js"></script>
     <script src="/recommendations.js"></script>
     <script>
-      window.onload = function() {
-        recommendTracks();
-      }
+        function displayRecommendations(recommendationsArray) {
+            recommendationsInfo.style.display = "none";
+            
+            displayTopRecommendations(recommendationsArray);
+            let recommendations = document.getElementById("recommendations");
+            recommendations.style.display = "block";
+
+            displayOtherRecommendations(recommendationsArray);
+        }
+
+        function displayTopRecommendations(recommendations) {
+            //display the recommendations with similarity score in the topRecommendations section. these are the at the front of the array
+            for (let track of recommendations) {
+              if (track.similarityScore == 1) {
+                let trackDiv = document.createElement("div");
+                trackDiv.id = track.id;
+                trackDiv.className = "track";
+
+                trackDiv.innerHTML = "<h3>" + track.name + "</h3>";
+                trackDiv.innerHTML += "<p>Artists: " + track.artists.map(artist => artist.name).join(", ") + "</p>";
+                trackDiv.innerHTML += "<p>" + (track.similarityScore * 100) + "% Recommended</p>"; 
+
+                let albumImage = document.createElement("img");
+                albumImage.src = track.album.images[0].url;
+                trackDiv.appendChild(albumImage);
+
+                topRecommendations.appendChild(trackDiv); //add the track to the topRecommendations section
+              }
+            }
+        }
+
+        function displayOtherRecommendations (recommendations) {
+            //display the recommendations with similarity score in the otherRecommendations section. these are the at the back of the array
+            for (let track of recommendations) {
+              if (track.similarityScore != 1) {
+                let trackDiv = document.createElement("div");
+                trackDiv.id = track.id;
+                trackDiv.className = "track";
+
+                trackDiv.innerHTML = "<h3>" + track.name + "</h3>";
+                trackDiv.innerHTML += "<p>Artists: " + track.artists.map(artist => artist.name).join(", ") + "</p>";
+                trackDiv.innerHTML += "<p>" + (track.similarityScore * 100) + "% Recommended</p>"; 
+
+                let albumImage = document.createElement("img");
+                albumImage.src = track.album.images[0].url;
+                trackDiv.appendChild(albumImage);
+
+                otherRecommendations.appendChild(trackDiv); //add the track to the otherRecommendations section
+              }
+            }
+        }
+
+        
     </script>
   </body>
 </html>

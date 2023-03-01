@@ -7,23 +7,41 @@
 <body>
     <header>
         <h1>Spotistats</h1>
+
+        <nav>
+            <a class="selectedPage" href="/home.html">Home</a>
+            <a href="/stats.html">Statistics Viewer</a>
+            <a href="/recommendations.html">Recommendations</a>
+            <a href="/quiz.html">Quiz</a>
+            <button id="logOutButton" onclick="logOut()">Log Out</button>
+            <img id="currentUser" src="">   
+        </nav>
+
     </header>
 
-    <nav>
-        <a class="selectedPage" href="/home.html">Home</a>
-        <a href="/stats.html">Statistics Viewer</a>
-        <a href="/recommendations.html">Recommendations</a>
-        <a href="/quiz.html">Quiz</a>
-        <a href="#" class="right">Log Out</a>
-        <div id="userLoggedInMessage"></div>
-    </nav>
+    <main>
+        <div id="userLoggedInMessage">
+            <h2> Logged in as <span id="userName"></span></h2>
+            <img id="userImage" src="" alt="User Image">
+        </div>
 
-    <div id="userLoggedInMessage"></div>
+        <div id="homeInfo">
+            <h3>What can you do?</h3>
+            <p>Spotistats is a web application that allows you to view your Spotify statistics and get recommendations based on your listening habits.</p>
+            <p>Look at your statistics by clicking the Statistics Viewer link in the navigation bar above.</p>
+            <p>Get recommendations based on your listening habits by clicking the Recommendations link in the navigation bar above.</p>
+            <p>Take a quiz to see how well you know your music by clicking the Quiz link in the navigation bar above.</p>           
+        </div>
+
+
+    </main>
+    
 
 
     <script src="/functions.js"></script>
     <script>
-
+        document.getElementById('userName').innerHTML = user.displayName;
+	    document.getElementById('userImage').src = user.profilePicture;
     </script>
 
 

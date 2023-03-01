@@ -32,6 +32,12 @@ app.get("/quiz.html", (req, res) => {
 
 
 
+// Serve the "login.js" file
+app.get("/login.js", (req, res) => {
+    res.set('Content-Type', 'application/javascript');
+    res.sendFile(__dirname + "/login.js");
+});
+
 // Serve the "functions.js" file
 app.get("/functions.js", (req, res) => {
     res.set('Content-Type', 'application/javascript');
@@ -42,6 +48,12 @@ app.get("/functions.js", (req, res) => {
 app.get("/recommendations.js", (req, res) => {
     res.set('Content-Type', 'application/javascript');
     res.sendFile(__dirname + "/recommendations.js");
+});
+
+// Serve the "quiz.js" file
+app.get("/quiz.js", (req, res) => {
+    res.set('Content-Type', 'application/javascript');
+    res.sendFile(__dirname + "/quiz.js");
 });
 
 
