@@ -1,0 +1,74 @@
+[
+    {
+        "question": "What is your most played song this month?",
+        "type": "tracks",
+        "timePeriod": "short_term",
+        "answerIndex": 0
+    },
+    {
+        "question": "What is your most played song this year?",
+        "type": "tracks",
+        "timePeriod": "medium_term",
+        "answerIndex": 0
+    },
+    {
+        "question": "What is your most played song of all time?",
+        "type": "tracks",
+        "timePeriod": "long_term",
+        "answerIndex": 0
+    },
+    {
+        "question": "Who is your top artist of all time?",
+        "type": "artists",
+        "timePeriod": "long_term",
+        "answerIndex": 0
+    },
+    {
+        "question": "Who is your top artist this year?",
+        "type": "artists",
+        "timePeriod": "medium_term",
+        "answerIndex": 0
+    },
+    {
+        "question": "Who is your top artist this month?",
+        "type": "artists",
+        "timePeriod": "short_term",
+        "answerIndex": 0
+    },
+    {
+        "question": "Which of these artists have you listened to the most this year?",
+        "type": "artists",
+        "timePeriod": "medium_term",
+        "answerIndex": "random"
+    },
+    {
+        "question": "Which of these artists have you listened to the most this month?",
+        "type": "artists",
+        "timePeriod": "short_term",
+        "answerIndex": "random"
+    },
+    {
+        "question": "Which of these artists have you listened to the most in total?",
+        "type": "artists",
+        "timePeriod": "long_term",
+        "answerIndex": "random"
+    },
+    {
+        "question": "Which of these songs have you listened to the most this year?",
+        "type": "tracks",
+        "timePeriod": "medium_term",
+        "answerIndex": "random"
+    },
+    {
+        "question": "Which of these songs have you listened to the most this month?",
+        "type": "tracks",
+        "timePeriod": "short_term",
+        "answerIndex": "random"
+    },
+    {
+        "question": "Which of these songs have you listened to the most in total?",
+        "type": "tracks",
+        "timePeriod": "long_term",
+        "answerIndex": "random"
+    }
+]

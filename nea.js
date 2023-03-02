@@ -57,6 +57,13 @@ app.get("/quiz.js", (req, res) => {
 });
 
 
+//serve the "questions.json" file
+app.get("/questions.json", (req, res) => {
+    res.set('Content-Type', 'application/json');
+    res.sendFile(__dirname + "/questions.json");
+});
+
+
 
 app.get("/callback/", (req, res) => {
     res.redirect("/");

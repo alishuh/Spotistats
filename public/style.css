@@ -235,3 +235,18 @@ button {
         height: 100px;
         object-fit: contain;
     }
+
+
+
+
+/* =========== QUIZ PAGE =========== */
+
+/* === QUIZ === */
+.choicesSection {
+    display: flex;
+}
+
+.choice {
+    margin: 10px 10px;
+    width: 20%;
+}

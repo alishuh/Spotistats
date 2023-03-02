@@ -28,11 +28,20 @@
             <button id="quizButton" onclick="startQuiz()">Start Quiz</button>
         </section>
 
-        <section id="quiz" style="display: none;">
-            <h3 id="question"></h3>
-            <section id="answers"></section>
-            <button id="nextButton" onclick="nextQuestion()">Next</button>
+
+        <section id="quiz">
+
+            <h3 id="question"></h3> 
+
+            <section id="choicesSection"></section>
+
+            <section id="questionAnswered" style="display: none;">
+                <p id="answerFeedback"></p>
+                <button id="nextQuestionButton">Next Question</button>
+            </section>
+
         </section>
+
 
         <section id="quizResults" style="display: none;">
             <h3>Quiz Results</h3>
@@ -44,16 +53,7 @@
 
 
     <script src="/functions.js"></script>
-    <script>
-
-    </script>
-
-
-
-
-
-
-
+    <script src="/quiz.js"></script> 
 
 </body>
 </html>
