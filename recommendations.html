@@ -33,77 +33,15 @@
 
         <section class="recommendations" id="recommendations" style="display: none;">
 
-            <h3>100% Match</h3>
-            <section id="topRecommendations"></section>
-
-            <h3>Other Recommendations</h3>
-            <section id="otherRecommendations"></section>
+            <h3>Your Recommendations</h3>
+            <section id="recommendationsSection"></section>
 
         </section>
 
         
 
     </main>
-
-
-
-
     <script src="/api_calls.js"></script>
     <script src="/recommendations.js"></script>
-    <script>
-        function displayRecommendations(recommendationsArray) {
-            recommendationsInfo.style.display = "none";
-            
-            displayTopRecommendations(recommendationsArray);
-            let recommendations = document.getElementById("recommendations");
-            recommendations.style.display = "block";
-
-            displayOtherRecommendations(recommendationsArray);
-        }
-
-        function displayTopRecommendations(recommendations) {
-            //display the recommendations with similarity score in the topRecommendations section. these are the at the front of the array
-            for (let track of recommendations) {
-              if (track.similarityScore == 1) {
-                let trackDiv = document.createElement("div");
-                trackDiv.id = track.id;
-                trackDiv.className = "track";
-
-                trackDiv.innerHTML = "<h3>" + track.name + "</h3>";
-                trackDiv.innerHTML += "<p>Artists: " + track.artists.map(artist => artist.name).join(", ") + "</p>";
-                trackDiv.innerHTML += "<p>" + (track.similarityScore * 100) + "% Recommended</p>"; 
-
-                let albumImage = document.createElement("img");
-                albumImage.src = track.album.images[0].url;
-                trackDiv.appendChild(albumImage);
-
-                topRecommendations.appendChild(trackDiv); //add the track to the topRecommendations section
-              }
-            }
-        }
-
-        function displayOtherRecommendations (recommendations) {
-            //display the recommendations with similarity score in the otherRecommendations section. these are the at the back of the array
-            for (let track of recommendations) {
-              if (track.similarityScore != 1) {
-                let trackDiv = document.createElement("div");
-                trackDiv.id = track.id;
-                trackDiv.className = "track";
-
-                trackDiv.innerHTML = "<h3>" + track.name + "</h3>";
-                trackDiv.innerHTML += "<p>Artists: " + track.artists.map(artist => artist.name).join(", ") + "</p>";
-                trackDiv.innerHTML += "<p>" + (track.similarityScore * 100) + "% Recommended</p>"; 
-
-                let albumImage = document.createElement("img");
-                albumImage.src = track.album.images[0].url;
-                trackDiv.appendChild(albumImage);
-
-                otherRecommendations.appendChild(trackDiv); //add the track to the otherRecommendations section
-              }
-            }
-        }
-
-        
-    </script>
   </body>
 </html>
