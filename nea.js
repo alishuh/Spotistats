@@ -32,16 +32,17 @@ app.get("/quiz.html", (req, res) => {
 
 
 
-// Serve the "login.js" file
-app.get("/login.js", (req, res) => {
+
+// Serve the "api_calls.js" file
+app.get("/api_calls.js", (req, res) => {
     res.set('Content-Type', 'application/javascript');
-    res.sendFile(__dirname + "/login.js");
+    res.sendFile(__dirname + "/api_calls.js");
 });
 
-// Serve the "functions.js" file
-app.get("/functions.js", (req, res) => {
+// Serve the "statistics_viewer.js" file
+app.get("/statistics_viewer.js", (req, res) => {
     res.set('Content-Type', 'application/javascript');
-    res.sendFile(__dirname + "/functions.js");
+    res.sendFile(__dirname + "/statistics_viewer.js");
 });
 
 // Serve the "recommendations.js" file

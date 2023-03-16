@@ -20,48 +20,38 @@ class Track {
     //takes in array of track objects and returns array of Track objects with audio features 
     static async createTracks(tracks) {
         const tracksAudioFeatures = await getTracksAudioFeatures(tracks);
-        const trackObjects = [];
-        // Creates a Track object for each track
-        for (let i = 0; i < tracks.length; i++) {
-            const track = tracks[i];
-            const features = tracksAudioFeatures[i];
-            const trackObject = new Track(track, features);
-            trackObjects.push(trackObject);
-        }
-        return trackObjects;
+        return tracks.map((track, index) => new Track(track, tracksAudioFeatures[index]));
     }
 }
 
 
 class UserTopTracks {    
-    static tracks = [];
-    static averageTrackFeatures = {};
+    constructor() {
+        this.tracks = [];
+        this.averageTrackFeatures = null;
+    }
 
-    static async generate() {
+    async generate() {
         await this.getTopTracks();
         await this.getAverageTrackFeatures();
     }
 
-    static async getTopTracks() {
-        const topTracks = [];
+    async getTopTracks() {
+        const longTermTracks = await getTopItems("tracks", 40, "long_term");
+        const mediumTermTracks = await getTopItems("tracks", 40, "medium_term");
+        const shortTermTracks = await getTopItems("tracks", 10, "short_term");
 
-        let longTermTracks = await getTopItems("tracks", 40, "long_term");
-        let mediumTermTracks = await getTopItems("tracks", 40, "medium_term");
-        let shortTermTracks = await getTopItems("tracks", 10, "short_term");
-
-        // Combine the tracks from the three API calls into a single array with no duplicates
-        const allTracks = [...longTermTracks.items, ...mediumTermTracks.items, ...shortTermTracks.items];
-        allTracks.forEach(track => {
-            if (!topTracks.find(t => t.id === track.id)) {
-                topTracks.push(track);
-            }
+        //combine all tracks and remove duplicates
+        const allTracks = [...longTermTracks, ...mediumTermTracks, ...shortTermTracks];
+        const topTracks = allTracks.filter((track, index) => {
+            return allTracks.findIndex(t => t.id === track.id) === index;
         });
 
         this.tracks = await Track.createTracks(topTracks);
-    }
+    } 
 
     //calculates average feature value object for all of user's top tracks. put the getUsersTopTracksAverageFeatureVector, calculateAverageFeatureValue, and removeOutliers functions here as methods
-    static async getAverageTrackFeatures() {
+    async getAverageTrackFeatures() {
         const listOfTrackFeatures = ['acousticness', 'danceability', 'energy', 'instrumentalness', 'loudness', 'valence'];
         let averageTrackFeatures = new Track({name: 'userTopTracks', id: 'userTopTracks'}, {});
 
@@ -78,7 +68,7 @@ class UserTopTracks {
     }
 
     //calculates average feature value from array of feature vectors
-    static async calculateAverageFeature(featureValues) {
+    async calculateAverageFeature(featureValues) {
         featureValues = mergeSort(featureValues);
         featureValues = this.removeOutliers(featureValues);
         let total = 0;
@@ -90,7 +80,7 @@ class UserTopTracks {
     }
 
     //removes outliers from array 
-    static removeOutliers(array) { 
+    removeOutliers(array) { 
         let firstQuartile = array[Math.floor(array.length / 4)];
         let thirdQuartile = array[Math.floor(3 * array.length / 4)];
         let interquartileRange = thirdQuartile - firstQuartile;
@@ -109,8 +99,11 @@ class UserTopTracks {
 }
 
 class RecommendedTracks {
-    constructor() {
+    constructor(userTopTracks) {
         this.tracks = [];
+
+        this.userTopTracks = userTopTracks.tracks;
+        this.userAverageFeatures = userTopTracks.averageTrackFeatures;
     }
 
     async generate() {
@@ -125,11 +118,11 @@ class RecommendedTracks {
     //returns array of track objects with similar tracks to each track in userTopTracksArray
     async getSimilarTracks() {
         const similarTracksArray = [];
-        for (let topTrack of UserTopTracks.tracks) {
+        for (let topTrack of this.userTopTracks) {
             let similarTracks = await getTrackRecommendations(topTrack);
             for (let track of similarTracks) {
                 //only add track to similarTracksArray if it is not already in userTopTracksArray or similarTracksArray
-                if (!similarTracksArray.find(t => t.id === track.id) && !UserTopTracks.tracks.find(t => t.id === track.id)) { 
+                if (!similarTracksArray.find(t => t.id === track.id) && !this.userTopTracks.find(t => t.id === track.id)) { 
                     similarTracksArray.push(track);
                 }
             }
@@ -141,7 +134,7 @@ class RecommendedTracks {
 
     //returns tracks array with similarity score attribute added to each track object based on similarity to userAverageFeatures
     calculateSimilarityScore(tracks) {
-        const userMagnitude = this.calculateMagnitude(UserTopTracks.averageTrackFeatures);
+        const userMagnitude = this.calculateMagnitude(this.userAverageFeatures);
         for (let track of tracks) {
             const trackMagnitude = this.calculateMagnitude(track);
             const dotProduct = this.calculateDotProduct(track);
@@ -155,7 +148,7 @@ class RecommendedTracks {
     calculateDotProduct(track) {
         let dotProduct = 0;
         for (let feature in track.features) {
-            dotProduct += UserTopTracks.averageTrackFeatures.features[feature] * track.features[feature];
+            dotProduct += this.userAverageFeatures.features[feature] * track.features[feature];
         }
         return dotProduct;
     }
@@ -184,10 +177,11 @@ async function recommendTracks() {
     recommendationsInfo.innerHTML = 'Loading...';
 
     //generates the tracks and averageTrackFeatures attributes of userTopTracks
-    await UserTopTracks.generate(); 
+    const userTopTracks = new UserTopTracks();
+    await userTopTracks.generate();
     console.log("generated user top tracks");
 
-    const recommendedTracks = new RecommendedTracks();
+    const recommendedTracks = new RecommendedTracks(userTopTracks);
     await recommendedTracks.generate();
     console.log("generated recommended tracks");
 

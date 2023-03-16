@@ -12,13 +12,13 @@ const topArtists = {
 
 // Get the top tracks and artists from the Spotify API
 async function loadTopItems() {
-    topTracks.short_term = (await getTopItems('tracks', 20, 'short_term')).items;
-    topTracks.medium_term = (await getTopItems('tracks', 20, 'medium_term')).items;
-    topTracks.long_term = (await getTopItems('tracks', 20, 'long_term')).items;
+    topTracks.short_term = (await getTopItems('tracks', 20, 'short_term'));
+    topTracks.medium_term = (await getTopItems('tracks', 20, 'medium_term'));
+    topTracks.long_term = (await getTopItems('tracks', 20, 'long_term'));
 
-    topArtists.short_term = (await getTopItems('artists', 20, 'short_term')).items;
-    topArtists.medium_term = (await getTopItems('artists', 20, 'medium_term')).items;
-    topArtists.long_term = (await getTopItems('artists', 20, 'long_term')).items;
+    topArtists.short_term = (await getTopItems('artists', 20, 'short_term'));
+    topArtists.medium_term = (await getTopItems('artists', 20, 'medium_term'));
+    topArtists.long_term = (await getTopItems('artists', 20, 'long_term'));
 }
 
 
