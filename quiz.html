@@ -29,7 +29,7 @@
         </section>
 
 
-        <section id="quiz">
+        <section id="quiz" style="display: none;">
 
             <h3 id="question"></h3> 
 
@@ -37,7 +37,7 @@
 
             <section id="questionAnswered" style="display: none;">
                 <p id="answerFeedback"></p>
-                <button id="nextQuestionButton">Next Question</button>
+                <section id="nextQuestionButtonSection"></section>
             </section>
 
         </section>
@@ -46,6 +46,7 @@
         <section id="quizResults" style="display: none;">
             <h3>Quiz Results</h3>
             <p id="quizScore"></p>
+            <p>Click the button below to restart the quiz.</p>
             <button id="restartButton" onclick="restartQuiz()">Restart Quiz</button>
         </section>
         

@@ -297,7 +297,7 @@ button {
     display: flex;
 }
 
-.choice {
+.choiceButton {
     margin: 10px 10px;
     width: 20%;
 }
