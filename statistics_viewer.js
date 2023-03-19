@@ -54,7 +54,6 @@ class TopArtist extends TopItem {
     constructor(artist, index) {
         super(artist, index);
         this.genres = this.convertToList(artist.genres);
-        this.followers = artist.followers.total;
     }
 }
 

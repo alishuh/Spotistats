@@ -181,9 +181,66 @@ button {
 }
 
 
+/* =========== LOGIN PAGE =========== */
+#welcomeMessage h2 {
+    font-size: 30px;
+    font-weight: 600;
+    padding: 10px 10px;
+
+}
+#welcomeMessage p {
+    font-size: 20px;
+
+}
+#welcomeMessage ul {
+    padding: 0;
+
+}
+#welcomeMessage li {
+    font-size: 20px;
+    font-weight: 600;
+}
 
 
 
+/* =========== HOME PAGE =========== */
+#home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+#userLoggedInMessage {
+    display: inline-block;
+    background-color: #171821;
+    width: 20%;
+    margin: 10px 10px;
+    padding: 20px 40px;
+    border-radius: 80px;
+}
+#userLoggedInMessage h2 {
+    color: #cfbabc;
+    font-weight: 600;
+    margin: 0;
+}
+#userImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 60px;
+    margin: 10px;
+}
+#homeInfo {
+    display: inline-block;
+    padding: 20px 20px;
+    margin: 10px 10px;
+    width: 40%;
+}
+#homeInfo p {
+    font-size: 18px;
+}
+#homeInfo p b {
+    font-size: 22px;
+}
 
 
 

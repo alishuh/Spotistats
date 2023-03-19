@@ -6,7 +6,7 @@
         "answerIndex": 0
     },
     {
-        "question": "What is your most played song this year?",
+        "question": "What is your most played song over the past 6 months?",
         "type": "tracks",
         "timePeriod": "medium_term",
         "answerIndex": 0
@@ -24,7 +24,7 @@
         "answerIndex": 0
     },
     {
-        "question": "Who is your top artist this year?",
+        "question": "Who is your top artist over the past 6 months?",
         "type": "artists",
         "timePeriod": "medium_term",
         "answerIndex": 0
@@ -36,7 +36,7 @@
         "answerIndex": 0
     },
     {
-        "question": "Which of these artists have you listened to the most this year?",
+        "question": "Which of these artists have you listened to the most over the past 6 months?",
         "type": "artists",
         "timePeriod": "medium_term",
         "answerIndex": "random"
@@ -54,7 +54,7 @@
         "answerIndex": "random"
     },
     {
-        "question": "Which of these songs have you listened to the most this year?",
+        "question": "Which of these songs have you listened to the most over the past 6 months?",
         "type": "tracks",
         "timePeriod": "medium_term",
         "answerIndex": "random"
